@@ -56,7 +56,7 @@ class yg_actxrocketModule(loader.Module):
 
     @staticmethod
     def extract_text_from_button_url(url):
-        pattern = r"https://t.me/CryptoBot/?start=([A-Za-z0-9_/]+)"
+        pattern = r"https://t.me/CryptoBot\?start=([A-Za-z0-9_/]+)"
         match = re.search(pattern, url)
         if match:
             return match.group(1)
