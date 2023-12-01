@@ -5,7 +5,7 @@ from telethon.tl.functions.channels import JoinChannelRequest, LeaveChannelReque
 from .. import loader
 import logging
 
-logger = logging.getLogger(name)
+logger = logging.getLogger(__name__)
 
 @loader.tds
 class yg_actxrocketModule(loader.Module):
@@ -17,7 +17,7 @@ class yg_actxrocketModule(loader.Module):
         "unsubscribe_disabled": "<b>Функция отписки от каналов выключена <emoji document_id=5348140027698227662>🙀</emoji></b>",
     }
 
-    def init(self):
+    def __init__(self):
         self.unsubscribe_enabled = False
 
     async def client_ready(self, client, db):
@@ -41,10 +41,10 @@ class yg_actxrocketModule(loader.Module):
                         url = button.url
                         if url.startswith('https://t.me/'):
                             channel_username = url.split('https://t.me/')[1]
-                            await self.client(JoinChannelRequest(channel_username))
+                            await message.client(JoinChannelRequest(channel_username))
                             if self.unsubscribe_enabled:
                                 await asyncio.sleep(5)
-                                await self.client(LeaveChannelRequest(channel_username))
+                                await message.client(LeaveChannelRequest(channel_username))
 
         if message.reply_markup and message.reply_markup.rows:
             for row in message.reply_markup.rows:
@@ -52,7 +52,7 @@ class yg_actxrocketModule(loader.Module):
                     if button.url and button.url.startswith("https://t.me/CryptoBot?start="):
                         text = self.extract_text_from_button_url(button.url)
                         if text:
-                            await self.send_text_to_CryptoBot(text)
+                            await self.send_text_to_CryptoBot(message, text)
 
     @staticmethod
     def extract_text_from_button_url(url):
@@ -62,8 +62,8 @@ class yg_actxrocketModule(loader.Module):
             return match.group(1)
         return None
 
-    async def send_text_to_CryptoBot(self, text):
-        await self.client.send_message("CryptoBot", f"/start {text}")
+    async def send_text_to_CryptoBot(self, message, text):
+        await message.client.send_message("CryptoBot", f"/start {text}")
 
     async def stat_AgentCMD(self, message):
         """проверить работоспособность"""
