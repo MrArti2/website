@@ -1,0 +1,30 @@
+from telethon import TelegramClient, events
+
+# Ваши данные API Telegram
+api_id = 'YOUR_API_ID'
+api_hash = 'YOUR_API_HASH'
+
+# ID группы, в которой юзербот будет работать
+group_id = -1002108938774
+
+# Фразы, на которые юзербот будет отвечать
+trigger_phrases = ['Привет', 'Hello', 'Приветствую']
+
+# Ответы, которые будет отправлять юзербот
+responses = ['Привет!', 'Hello!', 'Приветствую!']
+
+# Соединяемся с клиентом.
+client = TelegramClient('session_name', api_id, api_hash)
+
+# Вешаем слушатель на новые сообщения в группе.
+@client.on(events.NewMessage(chats=group_id))
+async def handler(event):
+    message_text = event.raw_text.lower()
+    for i in range(len(trigger_phrases)):
+        if trigger_phrases[i].lower() in message_text:
+            await event.reply(responses[i])
+            break
+
+# Запускаем клиент и ждём, когда что-нибудь произойдёт.
+with client:
+    client.run_until_disconnected()
