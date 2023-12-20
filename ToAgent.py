@@ -43,11 +43,10 @@ class AFKMod(loader.Module):
     """Provides a message saying that you are unavailable"""
 
     strings = {
-        "name": "AFK",
-        "gone": "<b>I'm goin' AFK</b>",
-        "back": "<b>I'm no longer AFK</b>",
-        "afk": "<b>I'm AFK right now (since {} ago).</b>",
-        "afk_reason": "<b>I'm AFK right now (since {} ago).\nReason:</b> <i>{}</i>",
+        "name": "Дела",
+        "gone": "<b>Пошёл по делам</b>",
+        "back": "<b>У меня дела.</b>",
+        "afk": "<b>Заскамили? Пиши в мой бот, ссылка в био. Просьба не беспокоить по пустякам.</b>",
     }
 
     async def client_ready(self, client, db):
