@@ -4,10 +4,10 @@
 #  > ^ <   ⚠️ Owner of heta.hikariatama.ru doesn't take any responsibilities or intellectual property rights regarding this script
 # ---------------------------------------------------------------------------------
 # Name: afk
-# Description: Provides a message saying that you are unavailable
-# Author: HitaloSama
+# Description: Выдает сообщение о том, что вы недоступны.
+# Author: Агент
 # Commands:
-# .afk | .unafk
+# .ПишиВБот
 # ---------------------------------------------------------------------------------
 
 
