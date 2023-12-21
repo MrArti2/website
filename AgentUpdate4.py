@@ -40,7 +40,7 @@ logger = logging.getLogger(__name__)
 
 @loader.tds
 class AFKMod(loader.Module):
-    """Агент ушёл по делам"""
+    """ㅤㅤㅤㅤㅤㅤㅤㅤ"""
 
     strings = {
         "name": "Агент ушёл/пришёл",
