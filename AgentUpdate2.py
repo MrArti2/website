@@ -40,10 +40,10 @@ logger = logging.getLogger(__name__)
 
 @loader.tds
 class AFKMod(loader.Module):
-    """Provides a message saying that you are unavailable"""
+    """Агент ушёл по делам"""
 
     strings = {
-        "name": "Агент ушёл",
+        "name": "Агент ушёл/пришёл",
         "gone": "<b>Пошёл по делам.</b>",
         "back": "<b>Закончил дела.</b>",
         "afk": "<b>Заскамили? Пиши в мой бот, ссылка в био. Просьба не беспокоить по пустякам (Если что не реклама, это автоотвечалка. Не надо меня банить, я хороший. Спасибо.)</b>",
@@ -54,7 +54,7 @@ class AFKMod(loader.Module):
         self._me = await client.get_me()
 
     async def afkcmd(self, message):
-        """ [message]"""
+        """[message]"""
         if utils.get_args_raw(message):
             self._db.set(__name__, "afk", utils.get_args_raw(message))
         else:
@@ -65,7 +65,7 @@ class AFKMod(loader.Module):
         await utils.answer(message, self.strings("gone", message))
 
     async def unafkcmd(self, message):
-        """Remove the AFK status"""
+        """   """
         self._db.set(__name__, "afk", False)
         self._db.set(__name__, "gone", None)
         self._db.set(__name__, "ratelimit", [])
