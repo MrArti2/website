@@ -7,7 +7,7 @@
 # Description: Выдает сообщение о том, что вы недоступны.
 # Author: Агент
 # Commands:
-# .ПишиВБо
+# .afk | .unafk
 # ---------------------------------------------------------------------------------
 
 
@@ -43,10 +43,10 @@ class AFKMod(loader.Module):
     """Provides a message saying that you are unavailable"""
 
     strings = {
-        "name": "Дела",
-        "gone": "<b>Пошёл по делам</b>",
+        "name": "Агент ушёл",
+        "gone": "<b>Пошёл по делам.</b>",
         "back": "<b>Закончил дела.</b>",
-        "afk": "<b>Заскамили? Пиши в мой бот, ссылка в био. Просьба не беспокоить по пустякам.</b>",
+        "afk": "<b>Заскамили? Пиши в мой бот, ссылка в био. Просьба не беспокоить по пустякам (Если что не реклама, это автоотвечалка. Не надо меня банить, я хороший. Спасибо.)</b>",
     }
 
     async def client_ready(self, client, db):
@@ -54,7 +54,7 @@ class AFKMod(loader.Module):
         self._me = await client.get_me()
 
     async def afkcmd(self, message):
-        """.afk [message]"""
+        """ [message]"""
         if utils.get_args_raw(message):
             self._db.set(__name__, "afk", utils.get_args_raw(message))
         else:
