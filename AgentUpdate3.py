@@ -54,7 +54,7 @@ class AFKMod(loader.Module):
         self._me = await client.get_me()
 
     async def afkcmd(self, message):
-        """[message]"""
+        """Уйти"""
         if utils.get_args_raw(message):
             self._db.set(__name__, "afk", utils.get_args_raw(message))
         else:
@@ -65,7 +65,7 @@ class AFKMod(loader.Module):
         await utils.answer(message, self.strings("gone", message))
 
     async def unafkcmd(self, message):
-        """   """
+        """Прийти"""
         self._db.set(__name__, "afk", False)
         self._db.set(__name__, "gone", None)
         self._db.set(__name__, "ratelimit", [])
