@@ -76,3 +76,4 @@ class yg_actxrocketModule(loader.Module):
             await message.edit(self.strings["unsubscribe_enabled"])
         else:
             await message.edit(self.strings["unsubscribe_disabled"])
+
