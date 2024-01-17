@@ -18,10 +18,8 @@ async def type(_,message):
 
 			if "Пон, не попал" in ms:
 				await m.reply("+")
-			elif "киви" in ms or "qiwi" in ms:
-				await m.reply("Мой киви")
-			elif "комент" in ms or "напиш" in ms:
-				await m.reply("безумно можно быть первым, безумно можно через стены")	
+			elif "+fire" in ms or "напиш" in ms:
+				await m.reply("Не попал")	
 		except:
 			None
 
