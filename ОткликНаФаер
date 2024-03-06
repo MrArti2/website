@@ -25,5 +25,5 @@ async def type(_,message):
 
 
 
-print("ok")
+print("ок")
 app.run()
